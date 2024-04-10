@@ -1,6 +1,14 @@
 local M = {}
 
-local B = require 'dp_base'
+local sta, B = pcall(require, 'dp_base')
+
+if not sta then return print('Dp_base is required!', debug.getinfo(1)['source']) end
+
+-- if B.check_plugins {
+--       'git@github.com:peter-lyr/dp_init',
+--     } then
+--   return
+-- end
 
 B.lazy_map {
   { '<F3>',      function() return vim.fn.strftime '%H%M%S-' end,            mode = { 'c', }, expr = true, silent = false, desc = 'my.imaps: time', },
@@ -33,49 +41,6 @@ vim.g.brace = ''         -- {}
 vim.g.angle_bracket = '' -- <>
 vim.g.curline = ''
 
-function M.setreg()
-  local bak = vim.fn.getreg '"'
-  local save_cursor = vim.fn.getpos '.'
-  local line = vim.fn.trim(vim.fn.getline '.')
-  vim.g.curline = line
-  if string.match(line, [[%']]) then
-    vim.cmd "silent norm yi'"
-    vim.g.single_quote = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
-    pcall(vim.fn.setpos, '.', save_cursor)
-  end
-  if string.match(line, [[%"]]) then
-    vim.cmd 'silent norm yi"'
-    vim.g.double_quote = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
-    pcall(vim.fn.setpos, '.', save_cursor)
-  end
-  if string.match(line, [[%`]]) then
-    vim.cmd 'silent norm yi`'
-    vim.g.back_quote = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
-    pcall(vim.fn.setpos, '.', save_cursor)
-  end
-  if string.match(line, [[%)]]) then
-    vim.cmd 'silent norm yi)'
-    vim.g.parentheses = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
-    pcall(vim.fn.setpos, '.', save_cursor)
-  end
-  if string.match(line, '%]') then
-    vim.cmd 'silent norm yi]'
-    vim.g.bracket = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
-    pcall(vim.fn.setpos, '.', save_cursor)
-  end
-  if string.match(line, [[%}]]) then
-    vim.cmd 'silent norm yi}'
-    vim.g.brace = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
-    pcall(vim.fn.setpos, '.', save_cursor)
-  end
-  if string.match(line, [[%>]]) then
-    vim.cmd 'silent norm yi>'
-    vim.g.angle_bracket = vim.fn.getreg '"' ~= bak and vim.fn.getreg '"' or ''
-    pcall(vim.fn.setpos, '.', save_cursor)
-  end
-  vim.fn.setreg('"', bak)
-end
-
 B.aucmd({ 'BufLeave', 'CmdlineEnter', }, 'my.insertenter: CmdlineEnter', {
   callback = function()
     local word = vim.fn.expand '<cword>'
@@ -83,7 +48,7 @@ B.aucmd({ 'BufLeave', 'CmdlineEnter', }, 'my.insertenter: CmdlineEnter', {
     local Word = vim.fn.expand '<cWORD>'
     if #Word > 0 then vim.fn.setreg('3', Word) end
     if vim.g.telescope_entered or B.is_buf_fts { 'NvimTree', 'TelescopePrompt', 'DiffviewFileHistory', } then return end
-    M.setreg()
+    B.setreg()
   end,
 })
 
