@@ -1,6 +1,14 @@
 local M = {}
 
-local B = require 'dp_base'
+local sta, B = pcall(require, 'dp_base')
+
+if not sta then return print('Dp_base is required!', debug.getinfo(1)['source']) end
+
+-- if B.check_plugins {
+--       'git@github.com:peter-lyr/dp_init',
+--     } then
+--   return
+-- end
 
 B.lazy_map {
   { '<F3>',      function() return vim.fn.strftime '%H%M%S-' end,            mode = { 'c', }, expr = true, silent = false, desc = 'my.imaps: time', },
