@@ -41,7 +41,7 @@ vim.g.brace = ''         -- {}
 vim.g.angle_bracket = '' -- <>
 vim.g.curline = ''
 
-B.aucmd({ 'BufLeave', 'CmdlineEnter', }, 'my.insertenter: CmdlineEnter', {
+B.aucmd({ 'BufLeave', 'CmdlineEnter', }, 'imaps: CmdlineEnter', {
   callback = function()
     local word = vim.fn.expand '<cword>'
     if #word > 0 then vim.fn.setreg('e', word) end
@@ -49,6 +49,14 @@ B.aucmd({ 'BufLeave', 'CmdlineEnter', }, 'my.insertenter: CmdlineEnter', {
     if #Word > 0 then vim.fn.setreg('3', Word) end
     if vim.g.telescope_entered or B.is_buf_fts { 'NvimTree', 'TelescopePrompt', 'DiffviewFileHistory', } then return end
     B.setreg()
+    M.save_cursor = vim.fn.getpos '.'
+  end,
+})
+
+B.aucmd({ 'CmdlineLeave', }, 'imaps: CmdlineLeave', {
+  callback = function()
+    vim.cmd 'norm lhjk'
+    pcall(vim.fn.setpos, '.', M.save_cursor)
   end,
 })
 
