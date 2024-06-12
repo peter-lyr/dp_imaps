@@ -19,7 +19,8 @@ B.lazy_map {
   { '<F1>', function() return vim.fn.strftime '%y%m%d-%Hh%Mm' end,  mode = { 'i', }, expr = true, silent = false, desc = 'my.imaps: datetime', },
   { '<F12>', function()
     if B.is_buf_fts { 'norg', } then
-      return vim.fn.strftime '* %y%m%d-%Hh%Mm'
+      -- return vim.fn.strftime '* %y%m%d-%Hh%Mm'
+      return vim.fn.strftime '%%%y%m%d-%Hh%Mm%%'
     else
       return vim.fn.strftime '# %y%m%d-%Hh%Mm'
     end
