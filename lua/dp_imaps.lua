@@ -54,7 +54,7 @@ B.aucmd({ 'BufLeave', 'CmdlineEnter', }, 'imaps: CmdlineEnter', {
     if #word > 0 then vim.fn.setreg('e', word) end
     local Word = vim.fn.expand '<cWORD>'
     if #Word > 0 then vim.fn.setreg('3', Word) end
-    if vim.g.telescope_entered or B.is_buf_fts { 'NvimTree', 'TelescopePrompt', 'DiffviewFileHistory', } then return end
+    if vim.g.telescope_entered or B.is_buf_fts { 'git', 'NvimTree', 'TelescopePrompt', 'DiffviewFileHistory', } then return end
     B.setreg()
     M.save_cursor = vim.fn.getpos '.'
   end,
