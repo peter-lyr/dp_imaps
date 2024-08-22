@@ -105,6 +105,10 @@ B.lazy_map {
   { '<c-;>',   '<cr>',                                 mode = { 'c', },           desc = 'my.insertenter: cr',                      silent = false, },
 }
 
+function M.i_enter()
+  vim.cmd [[call feedkeys("\<esc>o")]]
+end
+
 function M.copy_increase_up_line()
   local lnr = vim.fn.line '.'
   if lnr > 1 then
@@ -116,7 +120,8 @@ function M.copy_increase_up_line()
 end
 
 B.lazy_map {
-  { "<c-'>", function() M.copy_increase_up_line() end, mode = { 'i', }, desc = 'my.insertenter: copy increase up line', },
+  { "<c-'>", function() M.copy_increase_up_line() end, mode = { 'i', }, desc = 'my.insertenter: copy increase up line', silent = true, },
+  { '<c-;>', function() M.i_enter() end,               mode = { 'i', }, desc = 'Enter new empty line',                  silent = true, },
 }
 
 B.lazy_map {
@@ -125,3 +130,4 @@ B.lazy_map {
 }
 
 return M
+
