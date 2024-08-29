@@ -13,10 +13,10 @@ if not sta then return print('Dp_base is required!', debug.getinfo(1)['source'])
 B.lazy_map {
   { '<F3>', function() return vim.fn.strftime '%H%M%S-' end,        mode = { 'c', }, expr = true, silent = false, desc = 'my.imaps: time', },
   { '<F2>', function() return vim.fn.strftime '%y%m%d-' end,        mode = { 'c', }, expr = true, silent = false, desc = 'my.imaps: date', },
-  { '<F1>', function() return vim.fn.strftime '%Y%m%d-%Hh%Mm-' end, mode = { 'c', }, expr = true, silent = false, desc = 'my.imaps: datetime', },
+  { '<F4>', function() return vim.fn.strftime '%Y%m%d-%Hh%Mm-' end, mode = { 'c', }, expr = true, silent = false, desc = 'my.imaps: datetime', },
   { '<F3>', function() return vim.fn.strftime '%H%M%S' end,         mode = { 'i', }, expr = true, silent = false, desc = 'my.imaps: time', },
   { '<F2>', function() return vim.fn.strftime '%y%m%d' end,         mode = { 'i', }, expr = true, silent = false, desc = 'my.imaps: date', },
-  { '<F1>', function() return vim.fn.strftime '%y%m%d-%Hh%Mm' end,  mode = { 'i', }, expr = true, silent = false, desc = 'my.imaps: datetime', },
+  { '<F4>', function() return vim.fn.strftime '%y%m%d-%Hh%Mm' end,  mode = { 'i', }, expr = true, silent = false, desc = 'my.imaps: datetime', },
   { '<F12>', function()
     if B.is_buf_fts { 'norg', } then
       -- return vim.fn.strftime '* %y%m%d-%Hh%Mm'
